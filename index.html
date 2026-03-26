@@ -31,7 +31,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #fcfcfc; color: #333; line-height: 1.6; }
-        header { background-color: #1a1a1a; color: #fff; padding: 25px 0; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; position: relative; }
+        header { background-color: #1a1a1a; color: #fff; padding: 25px 0; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
         .container { max-width: 1200px; margin: 40px auto; display: flex; flex-wrap: wrap; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; }
         
         .product-gallery { flex: 1 1 600px; padding: 40px; background-color: #f8f8f8; display: flex; flex-direction: column; align-items: center; position: relative; }
@@ -133,10 +133,7 @@
 
 
 
-<header style="position: relative;">
-    <a href="https://braxton-shoes.github.io/" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #b17b44; text-decoration: none; font-size: 15px; text-transform: none; letter-spacing: 0; font-weight: 600; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#b17b44'">❮ Назад</a>
-    BRAXTON Legacy
-</header>
+<header>BRAXTON Legacy</header>
 
 <div class="container">
     <div class="product-gallery">
@@ -147,9 +144,9 @@
         </div>
 
         <div class="mobile-only" style="width: 100%; margin-top: 25px; text-align: center;">
-            <span class="selector-title">Оберіть колір: <br><span class="colorNameDisplay" style="color:#b17b44">Чорна замша N344z</span></span>
+            <span class="selector-title">Оберіть колір: <br><span class="colorNameDisplay" style="color:#b17b44">Чорна замша N344zb</span></span>
             <div class="color-options" style="justify-content: center; margin-top: 10px;">
-                <div class="color-circle color-color_0 active" onclick="selectColor('Чорна замша N344z', 'color_0')" title="Чорна замша N344z"></div>
+                <div class="color-circle color-color_0 active" onclick="selectColor('Чорна замша N344zb', 'color_0')" title="Чорна замша N344zb"></div>
 
             </div>
         </div>
@@ -164,9 +161,9 @@
         <p class="description">Елегантні та комфортні туфлі на кожен день. Виконані повністю з преміальних натуральних матеріалів для максимальної зручності.</p>
 
         <div class="desktop-only">
-            <span class="selector-title">Оберіть колір: <span class="colorNameDisplay" style="color:#b17b44">Чорна замша N344z</span></span>
+            <span class="selector-title">Оберіть колір: <span class="colorNameDisplay" style="color:#b17b44">Чорна замша N344zb</span></span>
             <div class="color-options">
-                <div class="color-circle color-color_0 active" onclick="selectColor('Чорна замша N344z', 'color_0')" title="Чорна замша N344z"></div>
+                <div class="color-circle color-color_0 active" onclick="selectColor('Чорна замша N344zb', 'color_0')" title="Чорна замша N344zb"></div>
 
             </div>
         </div>
@@ -210,8 +207,8 @@
 <div class="color-showcase-section fade-in-section">
     <h2 class="reviews-title">Також дивіться інші кольори</h2>
     <div class="color-showcase-grid">
-        <div class="color-showcase-item showcase-color_0 active" onclick="selectColor('Чорна замша N344z', 'color_0')">
-            <img src='DSC_0333.jpg' onerror="this.style.display='none'"><span>Чорна замша</span>
+        <div class="color-showcase-item showcase-color_0 active" onclick="selectColor('Чорна замша N344zb', 'color_0')">
+            <img src='DSC_0333.jpg' onerror="this.style.display='none'"><span>Чорна замша N344zb</span>
         </div>
 
     </div>
@@ -283,7 +280,7 @@
     };
 
     let activeColorKey = 'color_0';
-    let activeColorName = 'Чорна замша N344z';
+    let activeColorName = 'Чорна замша N344zb';
     let activeSize = '';
     let imgIdx = 0;
 
@@ -499,10 +496,10 @@
         if (targetBtn) {
             targetBtn.click();
         } else {
-            selectColor('Чорна замша N344z', 'color_0');
+            selectColor('Чорна замша N344zb', 'color_0');
         }
     } else {
-        selectColor('Чорна замша N344z', 'color_0');
+        selectColor('Чорна замша N344zb', 'color_0');
     }
 </script>
 
