@@ -49,25 +49,27 @@
         
         .container { max-width: 1200px; margin: 40px auto; display: flex; flex-wrap: wrap; background: #fff; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden; width: 100%; }
         
-        /* === NATIVE GALLERY STYLES === */
+        /* === CLASSIC GALLERY STYLES === */
         .product-gallery { flex: 1 1 600px; padding: 40px; background-color: #f8f8f8; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        
         .gallery-layout { display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; }
         
-        .main-image-container { flex: 1; max-width: 500px; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 8px; position: relative; background-color: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+        .main-image-container { 
+            flex: 1; max-width: 500px; width: 100%; aspect-ratio: 2 / 3; 
+            overflow: hidden; border-radius: 8px; position: relative; 
+            background-color: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.05); 
+            display: flex; align-items: center; justify-content: center; cursor: zoom-in;
+        }
         
-        /* CSS SCROLL SNAP - Ідеальний свайп для мобілки */
-        .gallery-slider-wrap { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-        .gallery-slider-wrap::-webkit-scrollbar { display: none; }
-        
-        .gallery-slide { flex: 0 0 100%; height: 100%; scroll-snap-align: center; display: flex; align-items: center; justify-content: center; cursor: zoom-in; }
-        .gallery-slide img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; transition: transform 0.1s ease; }
+        #mainImage { 
+            width: 100%; height: 100%; object-fit: contain; 
+            transition: transform 0.2s ease; 
+        }
         
         .nav-arrow { width: 50px; height: 50px; background: #fff; border: 1px solid #eaeaea; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #111; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex-shrink: 0; z-index: 10; }
         .nav-arrow:hover { background: #b17b44; color: #fff; border-color: #b17b44; transform: scale(1.1); }
         
         .image-pagination { position: absolute; bottom: 15px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; pointer-events: none; }
-        .dot { width: 8px; height: 8px; background: rgba(0,0,0,0.15); border-radius: 50%; transition: 0.3s; }
+        .dot { width: 8px; height: 8px; background: rgba(0,0,0,0.15); border-radius: 50%; transition: 0.3s; pointer-events: auto; cursor: pointer; }
         .dot.active { background: #b17b44; transform: scale(1.3); }
 
         .thumbnails-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px; width: 100%; }
@@ -162,9 +164,11 @@
 
         .mobile-only { display: none; }
         .mobile-sticky-buy { display: none; }
-        
-        /* === ЛАЙТБОКС (ДЛЯ ЗУМУ) === */
-        #lightboxImage { max-width: 100%; height: auto; transition: transform 0.3s ease; }
+
+        /* === LIGHTBOX CLASSIC CSS === */
+        #imageLightbox { flex-direction: column; padding: 0; background: #000; }
+        .lightbox-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: auto; touch-action: pan-x pan-y pinch-zoom; }
+        #lightboxImage { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         @media (max-width: 768px) {
             .container { margin: 0; border-radius: 0; flex-direction: column; box-shadow: none; padding-bottom: 80px; }
@@ -201,9 +205,8 @@
             <div class="gallery-layout">
                 <button class="nav-arrow desktop-only" onclick="scrollGallery(-1)">❮</button>
                 
-                <div class="main-image-container">
-                    <div class="gallery-slider-wrap" id="galleryScroll">
-                        </div>
+                <div class="main-image-container" id="mainImageWrap">
+                    <img id="mainImage" src="" alt="Фото товару" onclick="openLightbox()">
                     <div class="image-pagination" id="imagePagination"></div>
                 </div>
                 
@@ -400,8 +403,16 @@
     </div>
 
     <div id="imageLightbox" class="modal" onclick="closeLightbox(event)">
-        <span class="close-modal" style="color:white; top: 20px; right: 20px;" onclick="closeLightbox(event)">×</span>
-        <img id="lightboxImage" src="">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 2100; background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);">
+            <span id="lbCounter" style="color: #fff; font-size: 16px; font-weight: 600;">1 / 5</span>
+            <span class="close-modal" style="position: static; color: white; font-size: 35px;" onclick="closeLightbox(event)">×</span>
+        </div>
+        <div class="lightbox-img-wrap" id="lbImgWrap">
+            <img id="lightboxImage" src="">
+        </div>
+        <div style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: rgba(255,255,255,0.7); font-size: 12px; pointer-events: none;">
+            Свайпайте для перемикання • Зведіть пальці для зуму
+        </div>
     </div>
 
 <script>
@@ -414,10 +425,6 @@
     let activeColorName = 'Чорна замша N344zb';
     let activeSize = '';
     let currentSlideIndex = 0;
-
-    const galleryScroll = document.getElementById('galleryScroll');
-    const dotsContainer = document.getElementById('imagePagination');
-    const thumbsContainer = document.getElementById('thumbnails');
 
     function selectColor(name, key) {
         activeColorKey = key;
@@ -447,101 +454,127 @@
         const imgs = productImages[activeColorKey];
         if(!imgs || imgs.length === 0) return;
         
-        galleryScroll.innerHTML = '';
+        updateGalleryImage();
+        
+        const dotsContainer = document.getElementById('imagePagination');
+        const thumbsContainer = document.getElementById('thumbnails');
         dotsContainer.innerHTML = '';
         thumbsContainer.innerHTML = '';
-
+        
         imgs.forEach((imgSrc, i) => {
-            // Головний слайд
-            const slide = document.createElement('div');
-            slide.className = 'gallery-slide';
-            slide.onclick = () => openLightbox(imgSrc); // Клік для мобільного зуму
-            
-            const img = document.createElement('img');
-            img.src = imgSrc;
-            
-            // Лупа тільки для десктопа
-            if (window.innerWidth > 768) {
-                slide.addEventListener('mousemove', (e) => {
-                    const rect = slide.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width * 100;
-                    const y = (e.clientY - rect.top) / rect.height * 100;
-                    img.style.transformOrigin = `${x}% ${y}%`;
-                    img.style.transform = "scale(1.8)";
-                });
-                slide.addEventListener('mouseleave', () => {
-                    img.style.transformOrigin = "center center";
-                    img.style.transform = "scale(1)";
-                });
-            }
-            
-            slide.appendChild(img);
-            galleryScroll.appendChild(slide);
-
-            // Точка пагінації
             const dot = document.createElement('div');
             dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => { currentSlideIndex = i; updateGalleryImage(); };
             dotsContainer.appendChild(dot);
 
-            // Мініатюра
             const thumb = document.createElement('img');
             thumb.src = imgSrc;
             thumb.className = 'thumbnail' + (i === 0 ? ' active' : '');
-            thumb.onclick = () => scrollToSlide(i);
+            thumb.onclick = () => { currentSlideIndex = i; updateGalleryImage(); };
             thumbsContainer.appendChild(thumb);
         });
-        
-        galleryScroll.scrollLeft = 0;
     }
 
-    // Слухаємо скрол галереї (нативний свайп), щоб оновлювати точки і мініатюри
-    galleryScroll.addEventListener('scroll', () => {
-        const slideWidth = galleryScroll.clientWidth;
-        const newIndex = Math.round(galleryScroll.scrollLeft / slideWidth);
+    function updateGalleryImage() {
+        const imgs = productImages[activeColorKey];
+        if(!imgs) return;
         
-        if (newIndex !== currentSlideIndex) {
-            currentSlideIndex = newIndex;
-            updateActiveStates();
-        }
-    });
-
-    function updateActiveStates() {
-        const dots = dotsContainer.querySelectorAll('.dot');
-        const thumbs = thumbsContainer.querySelectorAll('.thumbnail');
+        document.getElementById('mainImage').src = imgs[currentSlideIndex];
         
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlideIndex));
-        thumbs.forEach((thumb, i) => thumb.classList.toggle('active', i === currentSlideIndex));
-    }
-
-    function scrollToSlide(index) {
-        const slideWidth = galleryScroll.clientWidth;
-        galleryScroll.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+        document.querySelectorAll('#imagePagination .dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlideIndex);
+        });
+        document.querySelectorAll('#thumbnails .thumbnail').forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === currentSlideIndex);
+        });
     }
 
     function scrollGallery(direction) {
         const imgs = productImages[activeColorKey];
-        let newIndex = currentSlideIndex + direction;
-        if (newIndex < 0) newIndex = imgs.length - 1;
-        if (newIndex >= imgs.length) newIndex = 0;
-        scrollToSlide(newIndex);
+        if(!imgs) return;
+        
+        currentSlideIndex += direction;
+        if (currentSlideIndex < 0) currentSlideIndex = imgs.length - 1;
+        if (currentSlideIndex >= imgs.length) currentSlideIndex = 0;
+        
+        updateGalleryImage();
+        
+        if (document.getElementById('imageLightbox').style.display === 'flex') {
+            document.getElementById('lightboxImage').src = imgs[currentSlideIndex];
+            document.getElementById('lbCounter').innerText = (currentSlideIndex + 1) + ' / ' + imgs.length;
+        }
     }
 
-    // --- ЛАЙТБОКС (Мобільний зум) ---
-    function openLightbox(src) {
-        if(window.innerWidth > 768) return; // На десктопі працює лупа
-        document.getElementById('lightboxImage').src = src;
+    // --- КЛАСИЧНИЙ СВАЙП (1 свайп = 1 фото) ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function handleSwipeGesture() {
+        if (touchEndX < touchStartX - 40) scrollGallery(1);  // Свайп вліво -> Наступне фото
+        if (touchEndX > touchStartX + 40) scrollGallery(-1); // Свайп вправо -> Попереднє фото
+    }
+
+    // Свайп для головного фото
+    const mainImgWrap = document.getElementById('mainImageWrap');
+    mainImgWrap.addEventListener('touchstart', e => { 
+        if(e.touches.length === 1) touchStartX = e.changedTouches[0].screenX; 
+    }, {passive: true});
+    mainImgWrap.addEventListener('touchend', e => { 
+        if(e.changedTouches.length === 1) {
+            touchEndX = e.changedTouches[0].screenX; 
+            handleSwipeGesture(); 
+        }
+    }, {passive: true});
+
+    // --- ЛУПА ДЛЯ ДЕСКТОПА ---
+    const mainImage = document.getElementById('mainImage');
+    mainImage.addEventListener('mousemove', function(e) {
+        if(window.innerWidth > 768) {
+            const rect = this.parentElement.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width * 100;
+            const y = (e.clientY - rect.top) / rect.height * 100;
+            this.style.transformOrigin = `${x}% ${y}%`;
+            this.style.transform = "scale(2)";
+        }
+    });
+    mainImage.addEventListener('mouseleave', function() {
+        this.style.transformOrigin = "center center";
+        this.style.transform = "scale(1)";
+    });
+
+    // --- ЛАЙТБОКС (Мобільний зум та свайп) ---
+    function openLightbox() {
+        if(window.innerWidth > 768) return; // На комп'ютері працює лупа
+        const imgs = productImages[activeColorKey];
+        
+        document.getElementById('lightboxImage').src = imgs[currentSlideIndex];
+        document.getElementById('lbCounter').innerText = (currentSlideIndex + 1) + ' / ' + imgs.length;
         document.getElementById('imageLightbox').style.display = 'flex';
         history.pushState({ modal: 'lightbox' }, '');
     }
 
     function closeLightbox(e) {
-        if(e && e.target && e.target.id !== 'imageLightbox' && !e.target.classList.contains('close-modal')) return;
+        // Якщо клік був по картинці - не закриваємо, дозволяємо зум
+        if(e && e.target && e.target.tagName === 'IMG') return; 
         document.getElementById('imageLightbox').style.display = 'none';
         if (history.state && history.state.modal === 'lightbox') {
             history.back();
         }
     }
 
+    // Свайп всередині лайтбоксу
+    const lbImgWrap = document.getElementById('lbImgWrap');
+    lbImgWrap.addEventListener('touchstart', e => { 
+        if(e.touches.length === 1) touchStartX = e.changedTouches[0].screenX; 
+    }, {passive: true});
+    lbImgWrap.addEventListener('touchend', e => { 
+        if(e.changedTouches.length === 1) {
+            touchEndX = e.changedTouches[0].screenX; 
+            handleSwipeGesture(); 
+        }
+    }, {passive: true});
+
+    // Свайп відгуків
     function slideReviews(direction) {
         document.getElementById('reviewsSlider').scrollBy({ left: direction * 330, behavior: 'smooth' });
     }
