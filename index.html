@@ -375,7 +375,7 @@
                 </div>
                 <div class="form-group">
                     <label>Номер телефону *</label>
-                    <input type="tel" id="custPhone" required="" placeholder="+38 (09X) XXX XX XX" maxlength="20">
+                    <input type="tel" id="custPhone" required="" placeholder="+38 (0XX) XXX-XX-XX" oninput="maskPhone(event)" maxlength="19">
                 </div>
                 
                 <div class="form-group">
@@ -707,6 +707,30 @@
         document.getElementById('imageLightbox').style.display = 'none';
     });
 
+    function maskPhone(e) {
+        const el = e.target;
+        let clearVal = el.value.replace(/\D/g, ''); 
+        
+        if (!clearVal) {
+            el.value = '';
+            return;
+        }
+
+        if (clearVal.startsWith('0')) clearVal = '38' + clearVal;
+        else if (clearVal.startsWith('8')) clearVal = '3' + clearVal;
+        else if (!clearVal.startsWith('38')) clearVal = '380' + clearVal;
+
+        clearVal = clearVal.substring(0, 12); 
+
+        let res = '+38 (';
+        if (clearVal.length > 2) res += clearVal.substring(2, 5);
+        if (clearVal.length > 5) res += ') ' + clearVal.substring(5, 8);
+        if (clearVal.length > 8) res += '-' + clearVal.substring(8, 10);
+        if (clearVal.length > 10) res += '-' + clearVal.substring(10, 12);
+
+        el.value = res;
+    }
+
     // Відправка замовлення на захищений Cloudflare Worker
     function sendFinalOrder(e) {
         e.preventDefault();
@@ -736,8 +760,8 @@
         }
 
         let cleanPhone = rawPhone.replace(/\D/g, ''); 
-        if (cleanPhone.length < 9) {
-            alert('❌ Будь ласка, введіть коректний номер телефону!');
+        if (cleanPhone.length < 12) {
+            alert('❌ Будь ласка, введіть повний номер телефону!');
             btn.disabled = false;
             btn.innerText = 'Підтвердити замовлення';
             return; 
