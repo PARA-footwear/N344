@@ -171,6 +171,46 @@
         .np-item { padding: 12px 14px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; transition: 0.2s; line-height: 1.3; }
         .np-item:hover { background: #f8f8f8; color: #b17b44; }
 
+        /* ===== Форма замовлення: влазить у екран телефона і гортається ===== */
+        #orderModal, #sizeGuideModal { align-items: flex-start; height: 100vh; height: 100dvh; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+        #orderModal .modal-content, #sizeGuideModal .modal-content { margin: auto; }
+        body:has(#orderModal[style*="flex"]), body:has(#sizeGuideModal[style*="flex"]) { overflow: hidden; }
+
+        #orderModal .modal-content { padding: 22px 22px 0; }
+        #orderModal h3 { font-size: 19px; margin-bottom: 12px !important; padding-right: 32px; }
+        #orderModal .close-modal { top: 10px; right: 16px; }
+        #orderModal .order-summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 14px; font-size: 14px; line-height: 1.4; }
+        #orderModal .form-group { margin-bottom: 10px; }
+        #orderModal .form-group label { margin-bottom: 4px; font-size: 13px; }
+        #orderModal .form-group input[type="text"], #orderModal .form-group input[type="tel"] { padding: 12px; }
+        #orderModal .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        #orderModal .seg-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        #orderModal .seg { position: relative; margin: 0; font-size: inherit; }
+        #orderModal .seg input { position: absolute; opacity: 0; width: 0; height: 0; padding: 0; margin: 0; }
+        #orderModal .seg span { display: block; text-align: center; padding: 11px 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-weight: 600; color: #555; background: #fff; cursor: pointer; transition: 0.2s; }
+        #orderModal .seg input:checked + span { border-color: #b17b44; background: #fbf3ea; color: #111; box-shadow: 0 0 0 2px rgba(177,123,68,0.15); }
+        #orderModal .seg input:focus-visible + span { outline: 2px solid #b17b44; outline-offset: 2px; }
+
+        #orderModal .np-dropdown { z-index: 20; max-height: 220px; -webkit-overflow-scrolling: touch; }
+        #orderModal .np-item { padding: 13px 14px; }
+        #orderModal .np-hint { font-size: 12px; color: #8a6d00; margin-top: 4px; line-height: 1.35; }
+        #orderModal .field-error { display: none; color: #d32f2f; font-size: 12.5px; margin-top: 4px; line-height: 1.3; }
+        #orderModal .has-error input { border-color: #d32f2f; box-shadow: 0 0 0 3px rgba(211,47,47,0.08); }
+
+        #orderModal .link-btn { background: none; border: none; color: #b17b44; font-size: 14px; font-weight: 600; padding: 2px 0 10px; cursor: pointer; font-family: inherit; }
+        #orderModal .notice { font-size: 12.5px; color: #8a6d00; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 8px 10px; line-height: 1.35; margin: 2px 0 12px; text-align: left; }
+        #orderModal .submit-bar { position: sticky; bottom: 0; z-index: 5; background: #fff; margin: 0 -22px; padding: 10px 22px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid #eee; }
+        #orderModal .submit-bar .buy-btn { padding: 16px; font-size: 16px; animation: none; }
+
+        #orderModal form { display: flex; flex-direction: column; flex: 1; }
+
+        @media (max-width: 600px) {
+            #orderModal { padding: 0; }
+            #orderModal .modal-content { max-width: none; min-height: 100%; border-radius: 0; box-shadow: none; display: flex; flex-direction: column; }
+            #orderModal .submit-bar { margin-top: auto; }
+        }
+
         @media (max-width: 768px) {
             .container { margin: 0; border-radius: 0; flex-direction: column; box-shadow: none; padding-bottom: 80px; }
             .product-gallery, .product-info { padding: 20px; width: 100%; }
@@ -188,6 +228,21 @@
             .st-new { font-size: 20px; font-weight: 800; color: #d32f2f; }
             .mobile-sticky-buy .buy-btn { padding: 14px; margin: 0; width: auto; flex-grow: 1; font-size: 16px; animation: none; box-shadow: none;}
         }
+
+        /* ===== Перехід у каталог ===== */
+        .header-right { display: flex; align-items: center; gap: 18px; }
+        .header-catalog { display: inline-flex; align-items: center; color: #fff; text-decoration: none; font-size: 13px; font-weight: 600; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; white-space: nowrap; transition: 0.2s; }
+        .header-catalog:hover { background: #b17b44; border-color: #b17b44; }
+        .catalog-cta { padding: 10px 20px 50px; }
+        .catalog-cta-inner { max-width: 520px; margin: 0 auto; padding: 28px 20px; border: 1px solid #eee; border-radius: 14px; background: #fff; text-align: center; }
+        .catalog-cta h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; color: #111; }
+        .catalog-cta p { color: #666; font-size: 14px; margin-bottom: 16px; }
+        .catalog-btn { display: inline-block; padding: 14px 28px; border: 2px solid #111; border-radius: 8px; color: #111; text-decoration: none; font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
+        .catalog-btn:hover { background: #111; color: #fff; }
+        @media (max-width: 768px) {
+            .header-logo { font-size: 20px; }
+            .catalog-cta { padding-bottom: 110px; } /* щоб нижня панель «Купити» не закривала кнопку */
+        }
     </style>
 
 
@@ -197,7 +252,10 @@
             <a href="https://para-footwear.github.io/" style="text-decoration: none; color: inherit;">
                 <div class="header-logo">PARA <span>footwear</span></div>
             </a>
-            <div class="header-info desktop-only">⌚ Щодня 10:00 - 20:00</div>
+            <div class="header-right">
+                <div class="header-info desktop-only">⌚ Щодня 10:00 - 20:00</div>
+                <a class="header-catalog" href="https://para-footwear.github.io/">Усі моделі ›</a>
+            </div>
         </div>
     </header>
 
@@ -349,6 +407,14 @@
         </div>
     </div>
 
+    <div class="catalog-cta">
+        <div class="catalog-cta-inner">
+            <h2>Не знайшли свою модель?</h2>
+            <p>У каталозі PARA footwear — інші моделі та кольори.</p>
+            <a class="catalog-btn" href="https://para-footwear.github.io/">Дивитись усі моделі</a>
+        </div>
+    </div>
+
     <div class="mobile-sticky-buy mobile-only">
         <div class="sticky-price">
             
@@ -364,71 +430,79 @@
             
             <div id="orderSummary" class="order-summary"></div>
 
-            <form onsubmit="sendFinalOrder(event)" id="mainForm">
-                <div class="form-group">
-                    <label>Ім'я *</label>
-                    <input type="text" id="custFirstName" required="" placeholder="Іван">
+            <form onsubmit="sendFinalOrder(event)" id="mainForm" novalidate="">
+                <div class="name-row">
+                    <div class="form-group" id="g_first">
+                        <label for="custFirstName">Ім'я *</label>
+                        <input type="text" id="custFirstName" placeholder="Іван" autocomplete="given-name" enterkeyhint="next">
+                        <div class="field-error"></div>
+                    </div>
+                    <div class="form-group" id="g_last">
+                        <label for="custLastName">Прізвище *</label>
+                        <input type="text" id="custLastName" placeholder="Іваненко" autocomplete="family-name" enterkeyhint="next">
+                        <div class="field-error"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Прізвище *</label>
-                    <input type="text" id="custLastName" required="" placeholder="Іваненко">
+
+                <div class="form-group" id="g_phone">
+                    <label for="custPhone">Номер телефону *</label>
+                    <input type="tel" id="custPhone" inputmode="tel" autocomplete="tel" placeholder="+38 (0XX) XXX-XX-XX" oninput="maskPhone(event)" maxlength="19">
+                    <div class="field-error"></div>
                 </div>
+
                 <div class="form-group">
-                    <label>Номер телефону *</label>
-                    <input type="tel" id="custPhone" required="" placeholder="+38 (0XX) XXX-XX-XX" oninput="maskPhone(event)" maxlength="19">
-                </div>
-                
-                <div class="form-group">
-                    <label>Спосіб доставки *</label>
-                    <div style="display: flex; gap: 15px; margin-top: 5px;">
-                        <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="deliveryType" value="np" checked="" onchange="toggleDelivery()"> Нова Пошта
-                        </label>
-                        <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="deliveryType" value="up" onchange="toggleDelivery()"> Укрпошта
-                        </label>
+                    <div class="seg-wrap" role="radiogroup" aria-label="Спосіб доставки">
+                        <label class="seg"><input type="radio" name="deliveryType" value="np" checked="" onchange="toggleDelivery()"><span>Нова Пошта</span></label>
+                        <label class="seg"><input type="radio" name="deliveryType" value="up" onchange="toggleDelivery()"><span>Укрпошта</span></label>
                     </div>
                 </div>
 
                 <div id="npFields">
-                    <div class="form-group" style="position: relative;">
-                        <label>Місто (Нова Пошта) *</label>
-                        <input type="text" id="npCity" placeholder="Почніть вводити назву міста..." autocomplete="off">
+                    <div class="form-group" id="g_npCity" style="position: relative;">
+                        <label for="npCity">Місто *</label>
+                        <input type="text" id="npCity" placeholder="Почніть вводити місто" autocomplete="off" autocorrect="off" enterkeyhint="next">
                         <div id="npCityList" class="np-dropdown"></div>
+                        <div class="field-error"></div>
                     </div>
-                    <div class="form-group" style="position: relative;">
-                        <label>Відділення / Поштомат *</label>
-                        <input type="text" id="npWarehouse" placeholder="Оберіть місто спочатку..." disabled="" autocomplete="off">
+                    <div class="form-group" id="g_npWh" style="position: relative;">
+                        <label for="npWarehouse">Відділення або поштомат *</label>
+                        <input type="text" id="npWarehouse" placeholder="Номер відділення, напр. 15" autocomplete="off" autocorrect="off">
                         <div id="npWarehouseList" class="np-dropdown"></div>
+                        <div class="np-hint" id="npHint" style="display:none;"></div>
+                        <div class="field-error"></div>
                     </div>
                 </div>
 
                 <div id="upFields" style="display:none;">
-                    <div class="form-group">
-                        <label>Населений пункт (Укрпошта) *</label>
-                        <input type="text" id="upCity" placeholder="м. Київ">
+                    <div class="form-group" id="g_upCity">
+                        <label for="upCity">Населений пункт *</label>
+                        <input type="text" id="upCity" placeholder="м. Київ" autocomplete="off">
+                        <div class="field-error"></div>
                     </div>
-                    <div class="form-group">
-                        <label>Індекс або номер відділення *</label>
-                        <input type="text" id="upPost" placeholder="(напр. 01001 або відділення 5)">
+                    <div class="form-group" id="g_upPost">
+                        <label for="upPost">Індекс або номер відділення *</label>
+                        <input type="text" id="upPost" placeholder="напр. 01001 або відділення 5" autocomplete="off">
+                        <div class="field-error"></div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Коментар (необов'язково)</label>
-                    <input type="text" id="custComment" placeholder="Побажання до замовлення">
+                <button type="button" class="link-btn" id="commentToggle" onclick="toggleComment()">+ Додати коментар до замовлення</button>
+                <div class="form-group" id="commentWrap" style="display:none;">
+                    <input type="text" id="custComment" maxlength="300" placeholder="Побажання до замовлення">
                 </div>
-                
-                <div style="background: #fff8e1; border: 1px solid #ffe082; color: #b08d00; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; line-height: 1.4; text-align: left;">
-                    📞 <b>Увага:</b> Наш менеджер зателефонує вам для підтвердження деталей. Будь ласка, переконайтеся, що ви вказали <b>актуальний номер</b> телефону!
+
+                <div class="notice">📞 Менеджер зателефонує для підтвердження — вкажіть <b>актуальний номер</b>.</div>
+
+                <div class="submit-bar">
+                    <div class="field-error" id="formError" style="text-align:center; margin: 0 0 8px;"></div>
+                    <button type="submit" class="buy-btn" id="subBtn">Підтвердити замовлення</button>
                 </div>
-                
-                <button type="submit" class="buy-btn" id="subBtn">Підтвердити замовлення</button>
             </form>
             <div id="successMsg" style="display:none; padding: 20px 0; text-align: center;">
                 <div style="font-size: 50px; margin-bottom: 10px;">✅</div>
                 <h3 style="color: #27ae60; font-size: 24px; font-weight: 800;">Дякуємо!</h3>
                 <p style="color: #555; font-size: 16px;">Ваше замовлення успішно прийнято.<br>Ми зв'яжемося з вами найближчим часом.</p>
+                <a class="catalog-btn" href="https://para-footwear.github.io/" style="margin-top: 18px; padding: 12px 22px; font-size: 14px;">Переглянути інші моделі</a>
             </div>
         </div>
     </div>
@@ -465,13 +539,36 @@
     let activeSize = '';
     let currentSlideIndex = 0;
 
-    const NP_API_KEY = 'ba57ffe8b4cf24a2782c9e81f4b83073';
     let npSelectedCityRef = '';
+    let npWarehouseFromList = false;
+    let pageReady = false; // щоб початковий вибір кольору не прокручував сторінку повз шапку
 
     function toggleDelivery() {
         const isNP = document.querySelector('input[name="deliveryType"]:checked').value === 'np';
         document.getElementById('npFields').style.display = isNP ? 'block' : 'none';
         document.getElementById('upFields').style.display = isNP ? 'none' : 'block';
+        clearFieldErrors();
+    }
+
+    function toggleComment() {
+        document.getElementById('commentToggle').style.display = 'none';
+        const w = document.getElementById('commentWrap');
+        w.style.display = 'block';
+        document.getElementById('custComment').focus();
+    }
+
+    function resetOrderForm() {
+        const f = document.getElementById('mainForm');
+        f.reset();
+        npSelectedCityRef = '';
+        npWarehouseFromList = false;
+        document.getElementById('npCityList').style.display = 'none';
+        document.getElementById('npWarehouseList').style.display = 'none';
+        document.getElementById('npHint').style.display = 'none';
+        document.getElementById('commentWrap').style.display = 'none';
+        document.getElementById('commentToggle').style.display = '';
+        toggleDelivery();
+        clearFieldErrors();
     }
 
     function selectColor(name, key) {
@@ -488,7 +585,7 @@
         if(showcaseItem) showcaseItem.classList.add('active');
 
         renderGallery();
-        document.querySelector('.container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (pageReady) document.querySelector('.container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         if (history.replaceState) {
             const variantNum = parseInt(key.split('_')[1]) + 1;
@@ -656,17 +753,22 @@
         const m = document.getElementById('orderModal');
         if (m.style.display === 'flex') return;
 
-        document.getElementById('orderSummary').innerHTML = `
-            <div><strong>Модель:</strong> Туфлі Braxton з натуральної шкіри та замші</div>
-            <div style="margin: 5px 0;"><strong>Колір:</strong> ${activeColorName}</div>
-            <div><strong>Розмір:</strong> ${activeSize}</div>
-            <div style="margin-top: 10px; font-size: 18px; color: #d32f2f;"><strong>Сума:</strong> <span style="font-weight: 800;">3100 ₴</span></div>
+        const summaryEl = document.getElementById('orderSummary');
+        summaryEl.style.display = '';
+        summaryEl.innerHTML = `
+            <div>
+                <div style="font-weight: 700;">Туфлі Braxton з натуральної шкіри та замші</div>
+                <div style="color: #666;">${activeColorName} · розмір ${activeSize}</div>
+            </div>
+            <div style="color: #d32f2f; font-weight: 800; font-size: 18px; white-space: nowrap;">3100 ₴</div>
         `;
 
-        document.getElementById('mainForm').style.display = 'block';
+        document.getElementById('mainForm').style.display = '';
         document.getElementById('successMsg').style.display = 'none';
+        resetOrderForm();
         document.getElementById('subBtn').disabled = false;
         document.getElementById('subBtn').innerText = 'Підтвердити замовлення';
+        m.scrollTop = 0;
 
         m.style.display = 'flex'; 
         history.pushState({ modal: 'order' }, '');
@@ -709,98 +811,119 @@
 
     function maskPhone(e) {
         const el = e.target;
-        let clearVal = el.value.replace(/\D/g, ''); 
-        
-        if (!clearVal) {
-            el.value = '';
+        const isDelete = !!(e.inputType && e.inputType.indexOf('delete') === 0);
+        const d = el.value.replace(/\D/g, '');
+
+        // національна частина номера (без +38)
+        let n = d.indexOf('38') === 0 ? d.slice(2) : d;
+        if (n.indexOf('38') === 0) n = n.slice(2);   // людина сама набирає код країни: 380...
+        if (n.charAt(0) === '8') n = n.slice(1);      // «8 067...»
+        if (n && n.charAt(0) !== '0' && n.charAt(0) !== '3') n = '0' + n;   // 67... -> 067...
+        else if (n.length >= 2 && n.charAt(0) === '3') n = '0' + n;         // 39... -> 039...
+        n = n.slice(0, 10);
+
+        if (!n) {
+            // дозволяємо стерти все, включно з префіксом +38
+            el.value = (isDelete || !d) ? '' : '+38 (';
             return;
         }
 
-        if (clearVal.startsWith('0')) clearVal = '38' + clearVal;
-        else if (clearVal.startsWith('8')) clearVal = '3' + clearVal;
-        else if (!clearVal.startsWith('38')) clearVal = '380' + clearVal;
-
-        clearVal = clearVal.substring(0, 12); 
-
-        let res = '+38 (';
-        if (clearVal.length > 2) res += clearVal.substring(2, 5);
-        if (clearVal.length > 5) res += ') ' + clearVal.substring(5, 8);
-        if (clearVal.length > 8) res += '-' + clearVal.substring(8, 10);
-        if (clearVal.length > 10) res += '-' + clearVal.substring(10, 12);
-
+        let res = '+38 (' + n.substring(0, 3);
+        if (n.length > 3) res += ') ' + n.substring(3, 6);
+        if (n.length > 6) res += '-' + n.substring(6, 8);
+        if (n.length > 8) res += '-' + n.substring(8, 10);
         el.value = res;
+    }
+
+    // ---------- помилки прямо біля полів (без alert) ----------
+    function setFieldError(groupId, msg) {
+        const g = document.getElementById(groupId);
+        if (!g) return;
+        g.classList.add('has-error');
+        const e = g.querySelector('.field-error');
+        if (e) { e.textContent = msg; e.style.display = 'block'; }
+    }
+
+    function clearFieldErrors() {
+        document.querySelectorAll('#mainForm .has-error').forEach(g => g.classList.remove('has-error'));
+        document.querySelectorAll('#mainForm .field-error').forEach(e => { e.style.display = 'none'; e.textContent = ''; });
+    }
+
+    function showFormError(msg) {
+        const e = document.getElementById('formError');
+        if (!e) return;
+        e.textContent = msg;
+        e.style.display = msg ? 'block' : 'none';
     }
 
     // Відправка замовлення на захищений Cloudflare Worker
     function sendFinalOrder(e) {
         e.preventDefault();
         const btn = document.getElementById('subBtn');
-        btn.disabled = true;
-        btn.innerText = 'Відправка...';
+        clearFieldErrors();
 
         const firstName = document.getElementById('custFirstName').value.trim();
         const lastName = document.getElementById('custLastName').value.trim();
         const rawPhone = document.getElementById('custPhone').value.trim();
         const comment = document.getElementById('custComment').value.trim();
-
-        if (!firstName || !lastName || !rawPhone) {
-            alert('❌ Будь ласка, заповніть всі обов\'язкові поля!');
-            btn.disabled = false;
-            btn.innerText = 'Підтвердити замовлення';
-            return;
-        }
-
-        const name = firstName + ' ' + lastName;
-
-        if (/\d/.test(name)) {
-            alert('❌ Ім\'я та Прізвище не можуть містити цифри!');
-            btn.disabled = false;
-            btn.innerText = 'Підтвердити замовлення';
-            return;
-        }
-
-        let cleanPhone = rawPhone.replace(/\D/g, ''); 
-        if (cleanPhone.length < 12) {
-            alert('❌ Будь ласка, введіть повний номер телефону!');
-            btn.disabled = false;
-            btn.innerText = 'Підтвердити замовлення';
-            return; 
-        }
-
         const isNP = document.querySelector('input[name="deliveryType"]:checked').value === 'np';
+
+        const errors = []; // [id групи, id поля, текст]
+
+        if (!firstName) errors.push(['g_first', 'custFirstName', "Вкажіть ім'я"]);
+        else if (/\d/.test(firstName)) errors.push(['g_first', 'custFirstName', "Ім'я не повинно містити цифри"]);
+
+        if (!lastName) errors.push(['g_last', 'custLastName', 'Вкажіть прізвище']);
+        else if (/\d/.test(lastName)) errors.push(['g_last', 'custLastName', 'Прізвище не повинно містити цифри']);
+
+        let cleanPhone = rawPhone.replace(/\D/g, '');
+        if (!/^380\d{9}$/.test(cleanPhone)) errors.push(['g_phone', 'custPhone', 'Введіть повний номер: +38 (0XX) XXX-XX-XX']);
+
         let finalCity = '';
         let finalPost = '';
 
         if (isNP) {
             finalCity = document.getElementById('npCity').value.trim();
             finalPost = document.getElementById('npWarehouse').value.trim();
-            
-            if (!npSelectedCityRef || !finalPost) {
-                alert('❌ Будь ласка, оберіть місто та відділення Нової Пошти з випадаючого списку!');
-                btn.disabled = false;
-                btn.innerText = 'Підтвердити замовлення';
-                return;
-            }
-            finalCity = '🔴 НОВА ПОШТА | ' + finalCity;
+
+            if (finalCity.length < 2) errors.push(['g_npCity', 'npCity', 'Вкажіть місто']);
+            if (!finalPost) errors.push(['g_npWh', 'npWarehouse', 'Вкажіть відділення або поштомат']);
+            else if (!npWarehouseFromList && !/\d/.test(finalPost)) errors.push(['g_npWh', 'npWarehouse', 'Вкажіть номер відділення цифрами, напр. 15']);
         } else {
             finalCity = document.getElementById('upCity').value.trim();
             finalPost = document.getElementById('upPost').value.trim();
-            
-            if (finalCity.length < 3 || finalPost.length < 2) {
-                alert('❌ Будь ласка, вкажіть коректний населений пункт та відділення для Укрпошти!');
-                btn.disabled = false;
-                btn.innerText = 'Підтвердити замовлення';
-                return;
+
+            if (finalCity.length < 3) errors.push(['g_upCity', 'upCity', 'Вкажіть населений пункт']);
+            if (finalPost.length < 2) errors.push(['g_upPost', 'upPost', 'Вкажіть індекс або номер відділення']);
+        }
+
+        if (errors.length) {
+            errors.forEach(er => setFieldError(er[0], er[2]));
+            const first = document.getElementById(errors[0][1]);
+            if (first) {
+                first.focus({ preventScroll: true });
+                first.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+            return;
+        }
+
+        showFormError('');
+        btn.disabled = true;
+        btn.innerText = 'Відправка...';
+
+        if (isNP) {
+            // якщо адресу ввели руками, а не вибрали зі списку — позначаємо для менеджера
+            if (!npSelectedCityRef || !npWarehouseFromList) finalPost += ' (введено вручну)';
+            finalCity = '🔴 НОВА ПОШТА | ' + finalCity;
+        } else {
             finalCity = '🟡 УКРПОШТА | ' + finalCity;
         }
 
-        if (cleanPhone.startsWith('380')) cleanPhone = cleanPhone.substring(2);
-        else if (cleanPhone.startsWith('80')) cleanPhone = cleanPhone.substring(1);
-        else if (cleanPhone.length === 9) cleanPhone = '0' + cleanPhone; 
-        
-        let displayPhone = cleanPhone; 
-        let linkPhone = "38" + cleanPhone; 
+        const name = firstName + ' ' + lastName;
+        cleanPhone = '0' + cleanPhone.slice(-9);
+
+        let displayPhone = cleanPhone;
+        let linkPhone = "38" + cleanPhone;
 
         const orderData = {
             productName: "Туфлі Braxton з натуральної шкіри та замші",
@@ -826,11 +949,11 @@
             if (data.success) {
                 if (!data.isSpam) {
                     if(typeof fbq === 'function') fbq('track', 'Purchase', {
-                        value: Number('3100'), 
-                        currency: 'UAH', 
+                        value: Number('3100'),
+                        currency: 'UAH',
                         content_name: 'Туфлі Braxton з натуральної шкіри та замші ' + activeColorName
                     });
-                    
+
                     if(window.ttq) {
                         window.ttq.track('CompletePayment', {
                             content_type: 'product',
@@ -844,122 +967,184 @@
                         });
                     }
                 }
-                
+
                 document.getElementById('mainForm').style.display = 'none';
                 document.getElementById('successMsg').style.display = 'block';
                 document.getElementById('orderSummary').style.display = 'none';
-                document.getElementById('mainForm').reset(); 
+                document.getElementById('orderModal').scrollTop = 0;
+                document.getElementById('mainForm').reset();
             } else {
-                alert('Помилка при відправці замовлення.');
+                showFormError('Не вдалося відправити замовлення. Спробуйте ще раз.');
                 btn.disabled = false;
                 btn.innerText = 'Підтвердити замовлення';
             }
         })
         .catch(err => {
             console.error('Fetch error:', err);
-            alert('Помилка мережі. Спробуйте ще раз.');
+            showFormError('Помилка мережі. Перевірте інтернет і спробуйте ще раз.');
             btn.disabled = false;
             btn.innerText = 'Підтвердити замовлення';
         });
     }
 
+    // ---------- Нова Пошта: підказки (не обов'язкові — можна вводити вручну) ----------
+    const NP_PROXY = 'https://para-proxy.thecupoftea1000.workers.dev/np';
+    const NP_FAIL_HINT = 'Підказки тимчасово недоступні — введіть місто та номер відділення вручну.';
+    let npCityReq = 0;
+    let npWhReq = 0;
+
+    async function npFetch(calledMethod, methodProperties) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 7000);
+        try {
+            const res = await fetch(NP_PROXY, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ calledMethod: calledMethod, methodProperties: methodProperties }),
+                signal: ctrl.signal
+            });
+            return await res.json();
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    function npShowHint(text) {
+        const h = document.getElementById('npHint');
+        if (!h) return;
+        h.textContent = text || '';
+        h.style.display = text ? 'block' : 'none';
+    }
+
+    async function npSearchCities(val) {
+        const cityInput = document.getElementById('npCity');
+        const cityList = document.getElementById('npCityList');
+        const id = ++npCityReq;
+        try {
+            const data = await npFetch('searchSettlements', { CityName: val, Limit: '50' });
+            if (id !== npCityReq) return;
+            if (!data || !data.success) { cityList.style.display = 'none'; npShowHint(NP_FAIL_HINT); return; }
+            const addrs = (data.data && data.data[0] && data.data[0].Addresses) || [];
+            if (!addrs.length) { cityList.style.display = 'none'; return; }
+            npShowHint('');
+            cityList.innerHTML = '';
+            addrs.forEach(city => {
+                const div = document.createElement('div');
+                div.className = 'np-item';
+                div.textContent = city.Present;
+                div.onclick = () => {
+                    cityInput.value = city.Present;
+                    npSelectedCityRef = city.DeliveryCity;
+                    cityList.style.display = 'none';
+                    const g = document.getElementById('g_npCity');
+                    if (g) { g.classList.remove('has-error'); const er = g.querySelector('.field-error'); if (er) er.style.display = 'none'; }
+                    const wh = document.getElementById('npWarehouse');
+                    wh.value = '';
+                    npWarehouseFromList = false;
+                    npLoadWarehouses('');
+                    wh.focus();
+                };
+                cityList.appendChild(div);
+            });
+            cityList.style.display = 'block';
+        } catch (err) {
+            if (id !== npCityReq) return;
+            cityList.style.display = 'none';
+            npShowHint(NP_FAIL_HINT);
+        }
+    }
+
+    async function npLoadWarehouses(query) {
+        if (!npSelectedCityRef) return;
+        const whInput = document.getElementById('npWarehouse');
+        const whList = document.getElementById('npWarehouseList');
+        const id = ++npWhReq;
+        try {
+            const data = await npFetch('getWarehouses', { CityRef: npSelectedCityRef, FindByString: query, Limit: '50' });
+            if (id !== npWhReq) return;
+            if (!data || !data.success) { whList.style.display = 'none'; npShowHint(NP_FAIL_HINT); return; }
+            const items = Array.isArray(data.data) ? data.data : [];
+            if (!items.length) { whList.style.display = 'none'; return; }
+            npShowHint('');
+            whList.innerHTML = '';
+            items.forEach(wh => {
+                const div = document.createElement('div');
+                div.className = 'np-item';
+                div.textContent = wh.Description;
+                div.onclick = () => {
+                    whInput.value = wh.Description;
+                    npWarehouseFromList = true;
+                    whList.style.display = 'none';
+                    const g = document.getElementById('g_npWh');
+                    if (g) { g.classList.remove('has-error'); const er = g.querySelector('.field-error'); if (er) er.style.display = 'none'; }
+                };
+                whList.appendChild(div);
+            });
+            whList.style.display = 'block';
+        } catch (err) {
+            if (id !== npWhReq) return;
+            whList.style.display = 'none';
+            npShowHint(NP_FAIL_HINT);
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById('mainForm');
         const npCityInput = document.getElementById('npCity');
         const npCityList = document.getElementById('npCityList');
         const npWarehouseInput = document.getElementById('npWarehouse');
         const npWarehouseList = document.getElementById('npWarehouseList');
 
+        // прибираємо червону помилку, щойно людина почала виправляти поле
+        form.addEventListener('input', (ev) => {
+            const g = ev.target.closest('.form-group');
+            if (g && g.classList.contains('has-error')) {
+                g.classList.remove('has-error');
+                const er = g.querySelector('.field-error');
+                if (er) er.style.display = 'none';
+            }
+            showFormError('');
+        });
+
+        // коли відкривається клавіатура — підсуваємо поле в центр екрана
+        form.addEventListener('focusin', (ev) => {
+            const el = ev.target;
+            if (el && el.matches && el.matches('input[type="text"], input[type="tel"]')) {
+                setTimeout(() => { try { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (_) {} }, 300);
+            }
+        });
+
         let cityDebounce;
-        if(npCityInput) {
+        if (npCityInput) {
             npCityInput.addEventListener('input', function() {
                 clearTimeout(cityDebounce);
                 const val = this.value.trim();
                 npSelectedCityRef = '';
-                npWarehouseInput.value = '';
-                npWarehouseInput.disabled = true;
-                
+                if (npWarehouseFromList) { npWarehouseInput.value = ''; npWarehouseFromList = false; }
+
                 if (val.length < 2) { npCityList.style.display = 'none'; return; }
-                
-                cityDebounce = setTimeout(async () => {
-                    try {
-                        const res = await fetch('https://api.novaposhta.ua/v2.0/json/', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                apiKey: NP_API_KEY,
-                                modelName: "Address",
-                                calledMethod: "searchSettlements",
-                                methodProperties: { CityName: val, Limit: "50" }
-                            })
-                        });
-                        const data = await res.json();
-                        if (data.success && data.data[0].Addresses.length > 0) {
-                            npCityList.innerHTML = '';
-                            data.data[0].Addresses.forEach(city => {
-                                const div = document.createElement('div');
-                                div.className = 'np-item';
-                                div.textContent = city.Present;
-                                div.onclick = () => {
-                                    npCityInput.value = city.Present;
-                                    npSelectedCityRef = city.DeliveryCity;
-                                    npCityList.style.display = 'none';
-                                    npWarehouseInput.disabled = false;
-                                    npWarehouseInput.placeholder = "Почніть вводити номер або вулицю...";
-                                    npWarehouseInput.focus();
-                                };
-                                npCityList.appendChild(div);
-                            });
-                            npCityList.style.display = 'block';
-                        } else {
-                            npCityList.style.display = 'none';
-                        }
-                    } catch(e) { console.error(e); }
-                }, 300);
+                cityDebounce = setTimeout(() => npSearchCities(val), 300);
             });
         }
 
         let whDebounce;
-        if(npWarehouseInput) {
+        if (npWarehouseInput) {
             npWarehouseInput.addEventListener('input', function() {
                 clearTimeout(whDebounce);
-                const val = this.value.trim();
+                npWarehouseFromList = false;
                 if (!npSelectedCityRef) return;
-                
-                whDebounce = setTimeout(async () => {
-                    try {
-                        const res = await fetch('https://api.novaposhta.ua/v2.0/json/', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                apiKey: NP_API_KEY,
-                                modelName: "Address",
-                                calledMethod: "getWarehouses",
-                                methodProperties: { CityRef: npSelectedCityRef, FindByString: val, Limit: "50" }
-                            })
-                        });
-                        const data = await res.json();
-                        if (data.success && data.data.length > 0) {
-                            npWarehouseList.innerHTML = '';
-                            data.data.forEach(wh => {
-                                const div = document.createElement('div');
-                                div.className = 'np-item';
-                                div.textContent = wh.Description;
-                                div.onclick = () => {
-                                    npWarehouseInput.value = wh.Description;
-                                    npWarehouseList.style.display = 'none';
-                                };
-                                npWarehouseList.appendChild(div);
-                            });
-                            npWarehouseList.style.display = 'block';
-                        } else {
-                            npWarehouseList.style.display = 'none';
-                        }
-                    } catch(e) { console.error(e); }
-                }, 300);
+                const val = this.value.trim();
+                whDebounce = setTimeout(() => npLoadWarehouses(val), 300);
+            });
+            // список відділень з'являється одразу при дотику до поля
+            npWarehouseInput.addEventListener('focus', function() {
+                if (npSelectedCityRef && !npWarehouseFromList) npLoadWarehouses(this.value.trim());
             });
         }
 
         document.addEventListener('click', function(e) {
-            if(npCityList && e.target !== npCityInput) npCityList.style.display = 'none';
-            if(npWarehouseList && e.target !== npWarehouseInput) npWarehouseList.style.display = 'none';
+            if (npCityList && e.target !== npCityInput) npCityList.style.display = 'none';
+            if (npWarehouseList && e.target !== npWarehouseInput) npWarehouseList.style.display = 'none';
         });
     });
 
@@ -982,6 +1167,7 @@
     } else {
         selectColor('Чорна замша N344zb', 'color_0');
     }
+    pageReady = true;
 </script>
 
 
